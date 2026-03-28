@@ -3,10 +3,11 @@ import Container from "react-bootstrap/Container";
 import RegisteredUsers from "./RegisteredUsers";
 import UnauthorizedModule from "./UnauthorizedModule";
 import EssaySubmittedUsers from "./EssaySubmittedUsers";
+import TopPerformers from "./TopPerformers";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { fetchDoctorsList } from "../utils/ApiCall";
-import TopPerformers from "./TopPerformers";
+import Revaluation from "./Revaluation";
 
 const DoctorsList = () => {
   const [totalRecords, setRegisteredRecords] = useState(0);
@@ -89,6 +90,14 @@ const DoctorsList = () => {
             >
               Top Performers
             </div>
+            <div
+              className={`text-center bg-light rounded-2 p-4 fw-semibold tab ${
+                filteredData === "revaluation" ? "active-tab" : ""
+              }`}
+              onClick={() => toggleData("revaluation")}
+            >
+              Revaluation
+            </div>
           </>
         ) : (
           <>
@@ -109,6 +118,14 @@ const DoctorsList = () => {
             >
               Top Performers
             </div>
+            <div
+              className={`text-center bg-light rounded-2 p-4 fw-semibold tab ${
+                filteredData === "revaluation" ? "active-tab" : ""
+              }`}
+              onClick={() => toggleData("revaluation")}
+            >
+              Revaluation
+            </div>
           </>
         )}
       </div>
@@ -117,13 +134,17 @@ const DoctorsList = () => {
           <RegisteredUsers setRegisteredRecords={setRegisteredRecords} />
         ) : filteredData === "submissions" ? (
           <EssaySubmittedUsers setSubmissionRecords={setSubmissionRecords} />
-        ) : (
+        ) : filteredData === "top-performers" ? (
           <TopPerformers />
+        ) : (
+          <Revaluation />
         )
       ) : filteredData === "submissions" ? (
         <UnauthorizedModule setSubmissionRecords={setSubmissionRecords} />
-      ) : (
+      ) : filteredData === "top-performers" ? (
         <TopPerformers />
+      ) : (
+        <Revaluation />
       )}
     </Container>
   );
